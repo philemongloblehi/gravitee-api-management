@@ -1,10 +1,10 @@
 package com.gravitee.gravitee.service;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,35 +29,68 @@ public class GraviteeClient {
         body.put("contextPath", contextPath);
         body.put("endpoint", endpoint);
 
-        return this.okhttpClientService.post(body, null);
+        String response = this.okhttpClientService.post(body, null);
+        if (this.isErrorResponse(response)) {
+            return this.getErrorResponseMessage(response);
+        }
+
+        return response;
     }
 
-    public String createPlanRequest(String name, String description, String validation, ArrayList<String> characteristics, Map<String, ArrayList<String>> paths, String security, String apiId) throws IOException {
+    public String createPlanRequest(String name, String description, String validation, String security, String apiId) throws IOException {
         body.put("name",name);
         body.put("description",description);
         body.put("validation",validation);
-        body.put("characteristics",characteristics.toString());
-        body.put("paths",paths.toString());
         body.put("security",security);
 
         return this.okhttpClientService.post(body, apiId + "/plans");
     }
 
     public String publishPlanRequest(String apiId, String planId) throws IOException {
-        return this.okhttpClientService.post(null, apiId + "/plans/" + planId + "/_publish");
+        String response = this.okhttpClientService.post(null, apiId + "/plans/" + planId + "/_publish");
+        if (this.isErrorResponse(response)) {
+            return this.getErrorResponseMessage(response);
+        }
+
+        return response;
     }
 
     public String deployApiRequest(String apiId) throws IOException {
-        return this.okhttpClientService.post(null, apiId + "/deploy");
+        String response = this.okhttpClientService.post(null, apiId + "/deploy");
+        if (this.isErrorResponse(response)) {
+            return this.getErrorResponseMessage(response);
+        }
+
+        return response;
     }
 
     public String startApiRequest(String apiId) throws IOException {
-        return this.okhttpClientService.post(null, apiId + "?action=START");
+        String response = this.okhttpClientService.post(null, apiId + "?action=START");
+        if (this.isErrorResponse(response)) {
+            return this.getErrorResponseMessage(response);
+        }
+
+        return response;
     }
 
     public String publishApiOnApimPortalRequest(Map<String, Object> data, String apiId) throws IOException {
         data.put("lifecyle_state", "published");
 
-        return this.okhttpClientService.put(data, apiId);
+        String response = this.okhttpClientService.put(data, apiId);
+        if (this.isErrorResponse(response)) {
+            return this.getErrorResponseMessage(response);
+        }
+
+        return response;
+    }
+
+    private boolean isErrorResponse(String response) {
+        JSONObject jsonObject = new JSONObject(response);
+        return jsonObject.has("message") && jsonObject.has("http_status");
+    }
+
+    private String getErrorResponseMessage(String response) {
+        JSONObject jsonObject = new JSONObject(response);
+        return jsonObject.getString("message");
     }
 }

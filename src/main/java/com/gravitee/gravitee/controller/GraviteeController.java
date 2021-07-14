@@ -27,7 +27,7 @@ public class GraviteeController {
                 "My first API",
                 "1",
                 "Gravitee.io Echo API Proxy",
-                "/myfirstapiTest",
+                "/test02",
                 "https://api.gravitee.io/echo"
         );
     }
@@ -35,32 +35,41 @@ public class GraviteeController {
     @GetMapping(path = "/create/request", name = "create_plan")
     public String createPlanRequest() throws IOException {
         ArrayList<String> characteristics = new ArrayList<>();
+        characteristics.add("");
         Map<String, ArrayList<String>> paths = new HashMap<>();
+        ArrayList<String> content = new ArrayList<>();
+        content.add("null");
+
         return this.graviteeClient.createPlanRequest(
                 "My Plan",
                 "Unlimited access plan",
                 "auto",
-                characteristics,
-                paths,
                 "api_key",
-                "apiId"
+                "f5f73c01-4d91-406d-b73c-014d91206d90"
 
         );
     }
 
     @GetMapping(path = "/publish/plan", name = "publish_plan")
-    public String publishPlanRequest() {
-        return null;
+    public String publishPlanRequest() throws IOException {
+        return this.graviteeClient.publishPlanRequest(
+                "f5f73c01-4d91-406d-b73c-014d91206d90",
+                "1ce0b909-a1f4-4368-a0b9-09a1f45368f2"
+        );
     }
 
     @GetMapping(path = "/deploy/api", name = "deploy_api")
-    public String deployApiRequest() {
-        return null;
+    public String deployApiRequest() throws IOException {
+        return this.graviteeClient.deployApiRequest(
+                "f5f73c01-4d91-406d-b73c-014d91206d90"
+        );
     }
 
     @GetMapping(path = "/start/api", name = "start_api")
-    public String startApiRequest() {
-        return null;
+    public String startApiRequest() throws IOException {
+        return this.graviteeClient.startApiRequest(
+                "f5f73c01-4d91-406d-b73c-014d91206d90"
+        );
     }
 
     @GetMapping(path = "/publish/api", name = "publish_api")
