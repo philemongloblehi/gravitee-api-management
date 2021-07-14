@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +32,7 @@ public class GraviteeClient {
         return this.okhttpClientService.post(body, null);
     }
 
-    public String createPlanRequest(String name, String description, String validation, ArrayList<String> characteristics, Map<String, String> paths, String security, String apiId) throws IOException {
+    public String createPlanRequest(String name, String description, String validation, ArrayList<String> characteristics, Map<String, ArrayList<String>> paths, String security, String apiId) throws IOException {
         body.put("name",name);
         body.put("description",description);
         body.put("validation",validation);
@@ -56,7 +55,7 @@ public class GraviteeClient {
         return this.okhttpClientService.post(null, apiId + "?action=START");
     }
 
-    public String publishApiOnApimPortalRequest(Map<String, String> data, String apiId) throws IOException {
+    public String publishApiOnApimPortalRequest(Map<String, Object> data, String apiId) throws IOException {
         data.put("lifecyle_state", "published");
 
         return this.okhttpClientService.put(data, apiId);

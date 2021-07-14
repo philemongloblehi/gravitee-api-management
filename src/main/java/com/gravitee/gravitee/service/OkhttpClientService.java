@@ -18,6 +18,9 @@ public class OkhttpClientService {
     @Value("${authentication.gravitee.token}")
     private String authenticationToken;
 
+    @Value("${base.url.gravitee.api.management}")
+    private String baseUrlApiManagement;
+
     private final OkHttpClient client = new OkHttpClient();
     private String url;
 
@@ -35,7 +38,7 @@ public class OkhttpClientService {
         }
     }
 
-    public String put(Map<String, String> data, String endpoint) throws IOException {
+    public String put(Map<String, Object> data, String endpoint) throws IOException {
         url = this.buildUrl(endpoint);
 
         RequestBody body = RequestBody.create(CONTENT_TYPE, String.valueOf(new JSONObject(data)));
@@ -50,8 +53,7 @@ public class OkhttpClientService {
     }
 
     private String buildUrl(String endpoint) {
-        String BASE_URL = "http://localhost:8083/management/organizations/DEFAULT/environments/DEFAULT/apis";
-        return null == endpoint ? BASE_URL : BASE_URL +"/" + endpoint;
+        return null == endpoint ? baseUrlApiManagement : baseUrlApiManagement +"/" + endpoint;
     }
 
 }

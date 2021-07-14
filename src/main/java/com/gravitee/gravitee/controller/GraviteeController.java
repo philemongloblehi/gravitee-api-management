@@ -32,10 +32,10 @@ public class GraviteeController {
         );
     }
 
+    @GetMapping(path = "/create/request", name = "create_plan")
     public String createPlanRequest() throws IOException {
         ArrayList<String> characteristics = new ArrayList<>();
-        Map<String, String> paths = new HashMap<>();
-        paths.put("/", "");
+        Map<String, ArrayList<String>> paths = new HashMap<>();
         return this.graviteeClient.createPlanRequest(
                 "My Plan",
                 "Unlimited access plan",
@@ -48,18 +48,22 @@ public class GraviteeController {
         );
     }
 
+    @GetMapping(path = "/publish/plan", name = "publish_plan")
     public String publishPlanRequest() {
         return null;
     }
 
+    @GetMapping(path = "/deploy/api", name = "deploy_api")
     public String deployApiRequest() {
         return null;
     }
 
+    @GetMapping(path = "/start/api", name = "start_api")
     public String startApiRequest() {
         return null;
     }
 
+    @GetMapping(path = "/publish/api", name = "publish_api")
     public String publishApiOnApimPortalRequest() {
         return null;
     }
