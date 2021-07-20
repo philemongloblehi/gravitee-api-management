@@ -14,5 +14,3 @@ Build Restful API for a application using Spring Boot, Gravitee.
 mvn spring-boot:run
 ```
 ![2](https://nordicapis.com/wp-content/uploads/Affordable-API-Management-Solutions-for-Startups-e1587079467330.jpg)
-![2](https://nordicapis.com/wp-content/uploads/What-to-Expect-from-an-API-management-catalog.jpg)
-![2](https://apifriends.com/wp-content/uploads/2019/09/API-Catalog.jpg)
