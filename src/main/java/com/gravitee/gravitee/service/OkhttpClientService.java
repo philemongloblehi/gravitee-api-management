@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * @author Philémon Globléhi <philemon.globlehi@veone.net>
+ * @author Philémon Globléhi <philemon.globlehi@gmail.com>
  */
 @Service
 public class OkhttpClientService {
@@ -24,7 +24,7 @@ public class OkhttpClientService {
     private final OkHttpClient client = new OkHttpClient();
     private String url;
 
-    public String post(Map<String, String> data, String endpoint) throws IOException {
+    public String post(Map<String, String> data, String endpoint) {
         url = this.buildUrl(endpoint);
 
         RequestBody body = RequestBody.create(CONTENT_TYPE, String.valueOf(new JSONObject(data)));
@@ -35,10 +35,12 @@ public class OkhttpClientService {
                 .build();
         try (Response response = client.newCall(request).execute()) {
             return response.body().string();
+        } catch (IOException ex) {
+            return ex.getMessage();
         }
     }
 
-    public String put(Map<String, Object> data, String endpoint) throws IOException {
+    public String put(Map<String, String> data, String endpoint) {
         url = this.buildUrl(endpoint);
 
         RequestBody body = RequestBody.create(CONTENT_TYPE, String.valueOf(new JSONObject(data)));
@@ -49,6 +51,8 @@ public class OkhttpClientService {
                 .build();
         try (Response response = client.newCall(request).execute()) {
             return response.body().string();
+        } catch (IOException ex) {
+            return ex.getMessage();
         }
     }
 

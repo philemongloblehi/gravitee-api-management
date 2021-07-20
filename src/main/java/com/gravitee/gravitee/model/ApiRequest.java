@@ -3,7 +3,7 @@ package com.gravitee.gravitee.model;
 import java.io.Serializable;
 
 /**
- * @author Philémon Globléhi <philemon.globlehi@veone.net>
+ * @author Philémon Globléhi <philemon.globlehi@gmail.com>
  */
 public class ApiRequest implements Serializable {
     private String name;
