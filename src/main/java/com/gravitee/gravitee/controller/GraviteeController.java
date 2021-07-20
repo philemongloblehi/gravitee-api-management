@@ -3,6 +3,7 @@ package com.gravitee.gravitee.controller;
 import com.gravitee.gravitee.model.ApiRequest;
 import com.gravitee.gravitee.model.PlanRequest;
 import com.gravitee.gravitee.service.GraviteeClient;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -78,27 +79,10 @@ public class GraviteeController {
     @PutMapping(path = "/publish/api/{apiId}", name = "publish_api")
     @ResponseStatus(HttpStatus.OK)
     public String publishApiOnApimPortalRequest(@RequestBody String body, @PathVariable String apiId) {
-        Map<String, String> data = this.fromStringtoMap(body);
         return this.graviteeClient.publishApiOnApimPortalRequest(
-                data,
+                new JSONObject(body),
                 apiId
         );
     }
-
-    private Map<String, String> fromStringtoMap(String data) {
-        Map<String, String> hashMap = new HashMap<>();
-        String[] contents = data.split(",");
-        for (String content : contents) {
-            String[] contentData;
-            contentData =content.split(":");
-            String key = contentData[0].trim();
-            String value = contentData[1].trim();
-            hashMap.put(key, value);
-        }
-
-        return hashMap;
-    }
-
-
 
 }

@@ -52,8 +52,8 @@ public class GraviteeClient {
         return this.okhttpClientService.post(null, apiId + "?action=START");
     }
 
-    public String publishApiOnApimPortalRequest(Map<String, String> data, String apiId) {
-        data.put("lifecyle_state", "published");
+    public String publishApiOnApimPortalRequest(JSONObject data, String apiId) {
+        data.put("lifecycle_state", "published");
 
         return this.okhttpClientService.put(data, apiId);
     }

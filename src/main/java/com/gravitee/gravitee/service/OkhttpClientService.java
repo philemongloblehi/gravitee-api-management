@@ -40,10 +40,10 @@ public class OkhttpClientService {
         }
     }
 
-    public String put(Map<String, String> data, String endpoint) {
+    public String put(JSONObject data, String endpoint) {
         url = this.buildUrl(endpoint);
 
-        RequestBody body = RequestBody.create(CONTENT_TYPE, String.valueOf(new JSONObject(data)));
+        RequestBody body = RequestBody.create(CONTENT_TYPE, data.toString());
         Request request = new Request.Builder()
                 .addHeader("Authorization", "Basic " + this.authenticationToken)
                 .url(url)
