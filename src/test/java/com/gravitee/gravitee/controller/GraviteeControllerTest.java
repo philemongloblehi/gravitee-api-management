@@ -156,6 +156,13 @@ public class GraviteeControllerTest {
         )
                 .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(jsonPath("$.name", is("My first API")))
+                .andExpect(jsonPath("$.version", is("1")))
+                .andExpect(jsonPath("$.description", is("Gravitee.io Echo API Proxy")))
+                .andExpect(jsonPath("$.context_path", is("/myfirstapi")))
+                .andExpect(jsonPath("$.visibility", is("PRIVATE")))
+                .andExpect(jsonPath("$.state", is("STARTED")))
+                .andExpect(jsonPath("$.lifecycle_state", is("PUBLISHED")))
                 .andReturn()
                 ;
     }
