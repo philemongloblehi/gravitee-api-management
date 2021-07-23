@@ -167,4 +167,27 @@ public class GraviteeControllerTest {
                 ;
     }
 
+    @Test
+    @Order(value = 6)
+    public void testThatCannotCreateApiRequest() throws Exception {
+        this.mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/api/v1/rest/gravitee/create/api")
+                        .content("{"
+                                + 	"\"name\": \"My first API\","
+                                + 	"\"version\": \"1\","
+                                + 	"\"description\": \"Gravitee.io Echo API Proxy\","
+                                + 	"\"contextPath\": \"/myfirstapi\","
+                                + 	"\"endpoint\": \"https://api.gravitee.io/echo\""
+                                + "}"
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect(jsonPath("$.status").exists())
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.status", is(400)));
+    }
+
 }
