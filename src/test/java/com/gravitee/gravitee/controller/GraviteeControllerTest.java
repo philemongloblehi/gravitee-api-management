@@ -10,6 +10,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.UUID;
+
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -169,7 +171,7 @@ public class GraviteeControllerTest {
 
     @Test
     @Order(value = 6)
-    public void testThatCannotCreateApiRequest() throws Exception {
+    public void testThatContextPathAlreadyExistWhenCreateApiRequest() throws Exception {
         this.mvc.perform(
                 MockMvcRequestBuilders
                         .post("/api/v1/rest/gravitee/create/api")
@@ -179,6 +181,29 @@ public class GraviteeControllerTest {
                                 + 	"\"description\": \"Gravitee.io Echo API Proxy\","
                                 + 	"\"contextPath\": \"/myfirstapi\","
                                 + 	"\"endpoint\": \"https://api.gravitee.io/echo\""
+                                + "}"
+                        )
+                        .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isBadRequest())
+                .andDo(print())
+                .andExpect(jsonPath("$.status").exists())
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.status", is(400)));
+    }
+
+    @Test
+    @Order(value = 7)
+    public void testThatApiIdNotFoundWhenCreatePlanRequest() throws Exception {
+        String apiIdGenerated = UUID.randomUUID().toString();
+        this.mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/api/v1/rest/gravitee/api/" + apiIdGenerated + "/create/plan")
+                        .content("{"
+                                + 	"\"name\": \"My Plan\","
+                                + 	"\"description\": \"Unlimited access plan\","
+                                + 	"\"validation\": \"auto\","
+                                + 	"\"security\": \"api_key\""
                                 + "}"
                         )
                         .contentType(MediaType.APPLICATION_JSON)
