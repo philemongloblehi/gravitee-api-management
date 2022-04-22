@@ -1,6 +1,4 @@
 # Spring Boot, Gravitee, API Management
-![2](https://repository-images.githubusercontent.com/36487440/95afc980-62e1-11e9-9060-8c0ee67677a1)
-
 
 Build Restful API for a application using Spring Boot, Gravitee.
 
