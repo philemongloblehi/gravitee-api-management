@@ -21,4 +21,10 @@ public class GlobalExceptionHandler {
         ErrorResponse errorDetails = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ResourceNotCreatedException.class)
+    public ResponseEntity<?> resourceNotCreatedException(ResourceNotCreatedException ex) {
+        ErrorResponse errorDetails = new ErrorResponse(HttpStatus.NO_CONTENT.value(), ex.getMessage());
+        return new ResponseEntity<>(errorDetails, HttpStatus.NO_CONTENT);
+    }
 }

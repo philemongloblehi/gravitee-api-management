@@ -1,6 +1,7 @@
 package com.gravitee.gravitee.service;
 
 import com.gravitee.gravitee.exception.ResourceBadRequestException;
+import com.gravitee.gravitee.exception.ResourceNotCreatedException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -102,5 +103,7 @@ public class GraviteeClient {
                 }
             }
         }
+
+        throw new ResourceNotCreatedException("The response is null");
     }
 }
