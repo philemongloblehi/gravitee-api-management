@@ -34,7 +34,7 @@ public class OkhttpClientService {
                 .post(body)
                 .build();
         try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
+            return null != response ? response.body().string() : "";
         } catch (IOException ex) {
             return ex.getMessage();
         }
@@ -50,7 +50,7 @@ public class OkhttpClientService {
                 .put(body)
                 .build();
         try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
+            return null != response ? response.body().string() : "";
         } catch (IOException ex) {
             return ex.getMessage();
         }
