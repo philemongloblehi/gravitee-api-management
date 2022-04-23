@@ -90,7 +90,7 @@ public class GraviteeClient {
     }
 
     private void checkGraviteeResponse(String response) {
-        if (!response.equals(null)) {
+        if (response != null) {
             if (this.isErrorResponse(response)) {
                 int statusCode = this.getErrorResponseStatusCode(response);
                 if (404 == statusCode) {
